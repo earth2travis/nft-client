@@ -42,27 +42,3 @@ export async function GET(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ text: "Error creating API Key:" }, { status: 500 });
   }
 }
-
-export async function PUT(req: NextRequest, response: NextResponse) {
-  const body = await req.json()
-  const keyData = JSON.stringify(body)
-  try {
-    const keyDelete = await fetch(
-      "https://api.pinata.cloud/users/revokeApiKey",
-      {
-        method: "PUT",
-        body: keyData,
-        headers: {
-          accept: "application/json",
-          "content-type": "application/json",
-          authorization: `Bearer ${pinataJWT}`,
-        },
-      },
-    );
-    const keyDeleteRes = await keyDelete.json();
-    return NextResponse.json(keyDeleteRes);
-  } catch (error) {
-    console.log(error);
-    return NextResponse.json({ text: "Error Deleting API Key:" }, { status: 500 });
-  }
-}

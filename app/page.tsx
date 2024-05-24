@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { type Address } from "viem";
-import { walletClient, publicClient } from "@/utils/config";
+import { createPublicClient, createWalletClient, custom, http, type Address } from "viem";
 import contractData from "@/utils/contract.json";
-import { deleteKey, generatePinataKey, uploadFile, uploadJson } from "@/utils/uploads";
+import {
+  generatePinataKey,
+  uploadFile,
+  uploadJson,
+} from "@/utils/uploads";
+import { baseSepolia } from "viem/chains";
 
 export default function Home() {
   const [account, setAccount] = useState<Address>();
@@ -14,12 +18,26 @@ export default function Home() {
   const [file, setFile] = useState<File | undefined>();
 
   async function connect() {
+    const walletClient = createWalletClient({
+      chain: baseSepolia,
+      transport: custom(window.ethereum),
+    });
+
     const [address] = await walletClient.requestAddresses();
     setAccount(address);
   }
 
   async function mintNft() {
     if (!account) return;
+
+    const walletClient = createWalletClient({
+      chain: baseSepolia,
+      transport: custom(window.ethereum),
+    });
+    const publicClient = createPublicClient({
+      chain: baseSepolia,
+      transport: http(),
+    });
 
     const keyData = await generatePinataKey();
 
@@ -42,10 +60,8 @@ export default function Home() {
       args: [account, `ipfs://${uriCID}`],
     });
 
-    const deleteKeyData = await deleteKey(keyData.pinata_api_key)
-
     const res = await walletClient.writeContract(request);
-    alert(res)
+    alert(res);
   }
 
   return (

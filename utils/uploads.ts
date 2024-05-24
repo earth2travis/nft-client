@@ -87,23 +87,3 @@ export async function uploadJson(content: any, keyToUse: string) {
     console.log("Error uploading file:", error);
   }
 }
-
-export async function deleteKey(keyId: string) {
-  try {
-    const deleteData = JSON.stringify({
-      apiKey: keyId,
-    });
-    console.log(deleteData);
-    const deleteKey = await fetch("/api/key", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: deleteData,
-    });
-    const deleteJson = await deleteKey.json();
-    console.log(deleteJson);
-  } catch (error) {
-    console.log("Error deleting API key:", error);
-  }
-}
