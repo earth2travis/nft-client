@@ -61,3 +61,31 @@ const [name, setName] = useState<string>('');
 const [description, setDescription] = useState<string>('');
 const [externalUrl, setExternalUrl] = useState<string>('');
 ```
+
+### Fix build errors in `route.ts`
+
+Add Edge runtime
+
+```ts
+export const runtime = 'edge';
+```
+
+Change require to import for the UUID module:
+
+```ts
+import { v4 as uuidv4 } from 'uuid';
+```
+
+Remove the res parameter from the GET function:
+
+```ts
+export async function GET(req: NextRequest) {
+  // Existing code remains unchanged
+}
+```
+
+Resolve TypeScript errors in `route.ts`
+
+```bash
+pnpm install --save-dev @types/uuid
+```

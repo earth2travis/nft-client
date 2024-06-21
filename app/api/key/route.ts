@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
+
 const pinataJWT = process.env.PINATA_JWT;
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     const uuid = uuidv4();
     const body = JSON.stringify({
@@ -37,7 +38,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       pinata_api_key: keyResJson.pinata_api_key,
       JWT: keyResJson.JWT,
     };
-    return NextResponse.json(keyData, { status: 200 });
+    return NextResponse.json(keyData);
   } catch (error) {
     console.log(error);
     return NextResponse.json(
