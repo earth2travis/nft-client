@@ -97,3 +97,13 @@ Resolve TypeScript errors in `route.ts`
 ```bash
 pnpm install --save-dev @types/uuid
 ```
+
+Add Compatibility flags to Cloudflare function settings:
+
+Production:
+
+Compatibility flags: nodejs_compat
+
+Preview:
+
+Compatibility flags: nodejs_compat
