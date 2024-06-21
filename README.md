@@ -16,16 +16,16 @@ pnpm install
 
 add `.env.local`
 
-````bash
+```bash
 NEXT_PUBLIC_CONTRACT_ADDRESS=
 PINATA_JWT=
-```bash
+```
 
 Replace `contract.json`
 
 ```bash
 pnpm run dev
-```bash
+```
 
 Update `page.tsx`
 
@@ -35,4 +35,4 @@ Update these constants to allow the input element to switch from being uncontrol
 const [name, setName] = useState<string>('');
 const [description, setDescription] = useState<string>('');
 const [externalUrl, setExternalUrl] = useState<string>('');
-````
+```
