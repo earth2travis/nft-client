@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
-const { v4: uuidv4 } = require("uuid");
+import { NextRequest, NextResponse } from 'next/server';
+const { v4: uuidv4 } = require('uuid');
 const pinataJWT = process.env.PINATA_JWT;
 
-export const dynamic = 'force-dynamic'
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
@@ -20,16 +21,16 @@ export async function GET(req: NextRequest, res: NextResponse) {
       maxUses: 2,
     });
     const keyRes = await fetch(
-      "https://api.pinata.cloud/users/generateApiKey",
+      'https://api.pinata.cloud/users/generateApiKey',
       {
-        method: "POST",
+        method: 'POST',
         body: body,
         headers: {
-          accept: "application/json",
-          "content-type": "application/json",
+          accept: 'application/json',
+          'content-type': 'application/json',
           authorization: `Bearer ${pinataJWT}`,
         },
-      },
+      }
     );
     const keyResJson = await keyRes.json();
     const keyData = {
@@ -39,6 +40,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
     return NextResponse.json(keyData, { status: 200 });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ text: "Error creating API Key:" }, { status: 500 });
+    return NextResponse.json(
+      { text: 'Error creating API Key:' },
+      { status: 500 }
+    );
   }
 }
