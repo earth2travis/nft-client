@@ -1,20 +1,22 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { createPublicClient, createWalletClient, custom, http, type Address } from "viem";
-import contractData from "@/utils/contract.json";
+import { useState } from 'react';
 import {
-  generatePinataKey,
-  uploadFile,
-  uploadJson,
-} from "@/utils/uploads";
-import { baseSepolia } from "viem/chains";
+  createPublicClient,
+  createWalletClient,
+  custom,
+  http,
+  type Address,
+} from 'viem';
+import contractData from '@/utils/contract.json';
+import { generatePinataKey, uploadFile, uploadJson } from '@/utils/uploads';
+import { baseSepolia } from 'viem/chains';
 
 export default function Home() {
   const [account, setAccount] = useState<Address>();
-  const [name, setName] = useState<string>();
-  const [description, setDescription] = useState<string>();
-  const [externalUrl, setExternalUrl] = useState<string>();
+  const [name, setName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [externalUrl, setExternalUrl] = useState<string>('');
   const [file, setFile] = useState<File | undefined>();
 
   async function connect() {
@@ -56,7 +58,7 @@ export default function Home() {
       account,
       address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x`,
       abi: contractData.abi,
-      functionName: "safeMint",
+      functionName: 'safeMint',
       args: [account, `ipfs://${uriCID}`],
     });
 
@@ -74,30 +76,30 @@ export default function Home() {
             placeholder="Name"
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
           />
           <input
             className="border border-black rounded-md p-2"
             placeholder="Description"
             type="text"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={e => setDescription(e.target.value)}
           />
           <input
             className="border border-black rounded-md p-2"
             placeholder="https://pinata.cloud"
             type="text"
             value={externalUrl}
-            onChange={(e) => setExternalUrl(e.target.value)}
+            onChange={e => setExternalUrl(e.target.value)}
           />
           <input
             className="border border-black rounded-md p-2"
             type="file"
-            onChange={(e) =>
+            onChange={e =>
               setFile(
                 e.target.files && e.target.files.length > 0
                   ? e.target.files[0]
-                  : undefined,
+                  : undefined
               )
             }
           />
