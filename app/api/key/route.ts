@@ -33,6 +33,9 @@ export async function GET(req: NextRequest) {
         },
       }
     );
+    if (!keyRes.ok) {
+      throw new Error('Failed to create API key');
+    }
     const keyResJson = await keyRes.json();
     const keyData = {
       pinata_api_key: keyResJson.pinata_api_key,

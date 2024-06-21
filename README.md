@@ -84,6 +84,14 @@ export async function GET(req: NextRequest) {
 }
 ```
 
+Added Error Handling Check:
+
+```ts
+if (!keyRes.ok) {
+  throw new Error('Failed to create API key');
+}
+```
+
 Resolve TypeScript errors in `route.ts`
 
 ```bash
